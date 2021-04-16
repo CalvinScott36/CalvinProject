@@ -1,7 +1,106 @@
-﻿
+﻿@model CalvinProject.Models.User
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Login Page";
 }
+<style>
+    .loginCard {
+        margin: 0 auto; /* Added */
+        float: none; /* Added */
+        margin-bottom: 10px; /* Added */
+        top: 60px;
+        width: 550px;
+        height: 350px
+    }
+    .loginButtons {
+        bottom: 4px;
+        position: absolute;
+    }
+    .loginHeader {
+        color: white !important;
+        background-color: navy !important;
+    }
+</style>
+<body>
+    <div class="card loginCard" style="">
+        <div class="card-header loginHeader">
+            <div style="text-align:center;">
+                <h3>Login</h3>
+            </div>
+        </div>
+        <div class="card-body" >
+            <div class="">
+                <form action="#">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="input-group mb-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text px-4 border-md border-right-0">
+                                        <i class="fa fa-user text-muted"></i>
+                                    </span>
+                                </div>
+                                <input id="firstName" type="text" name="firstname" placeholder="First Name" class="form-control bg-white border-left-0 border-md">
+                            </div>
 
-<h1>Login</h1>
+                            <div class="input-group  mb-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text px-4 border-md border-right-0">
+                                        <i class="fa fa-lock text-muted"></i>
+                                    </span>
+                                </div>
+                                <input id="password" type="password" name="password" placeholder="Password" class="form-control bg-white border-left-0 border-md">
+                            </div>
+                        </div>
+                        <div class="col-sm-12 loginButtons">
+                            <div class="col-sm-6 float-left">
+                                <button type="button" class="btn btn-primary ">Login</button>
+                            </div>
+                            <div class="col-sm-6 float-right">
+                                <button type="button" class="btn btn-primary float-right ">Register</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
 
+<script type="text/javascript">
+    function Login() {
+        var user = {
+            Name: $("#inputName").val(),
+            Password: $("#inputPassword").val(),
+            Email: $("#inputEmail").val()
+        };
+        if (user.Email === '') {
+            $('#dangerTextBody').text('Please fill in your email')
+            $('#dangerToast').toast('show');
+        }
+        if (user.Password === '') {
+            $('#dangerTextBody').text('Please fill in your password')
+            $('#dangerToast').toast('show');
+        } else {
+            $.ajax({
+                url: '@Url.Action("LoggedIn","Login")',
+                type: 'POST',
+                data: { "user": JSON.stringify(user) },
+                success: function (data) {
+                    if(data){
+                         $('#successTextBody').text('wellcome')
+                         $('#successToast').toast('show');
+                        window.location.href = '@Url.Action("index","home")';
+                    } else {
+                         $('#dangerTextBody').text('username or password is incorrect')
+                         $('#dangerToast').toast('show');
+                    }
+                },
+                error: function () {
+                    alert("error");
+                }
+        });
+    }
+   }
+    $(document).ready(function () {
+
+    });
+</script>
