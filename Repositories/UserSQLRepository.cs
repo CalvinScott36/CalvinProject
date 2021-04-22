@@ -1,5 +1,4 @@
 using CalvinProject.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 namespace CalvinProject.Models
@@ -35,7 +34,7 @@ namespace CalvinProject.Models
         {
             var user = new User();
             using (context) {
-              user = context.Users.FirstOrDefault(usr => usr.Email == Email);
+              user = context.Users.FirstOrDefault(usr => usr.Email == Email || user.UserName == Email);
             }
             return user;
         }

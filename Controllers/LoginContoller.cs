@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
 using CalvinProject.Models;
 using CalvinProject.Interfaces;
+using CalvinProject.Models.Response;
 
 namespace CalvinProject.Controllers
 {
@@ -13,7 +14,6 @@ namespace CalvinProject.Controllers
         public LoginController(IUserInterface userRepository)
         {
             _userRepository = userRepository;
-            _userRepository = userRepository;
         }
 
         public IActionResult Login()
@@ -22,15 +22,28 @@ namespace CalvinProject.Controllers
         }
 
         [HttpPost]
-        public IActionResult LoggedIn(string user)
+        public IActionResult LoggedIn([FromBody] User data)
         {
-            var userlogin = JsonConvert.DeserializeObject<User>(user);
-            var userRequest = _userRepository.GetUser(userlogin.Email);
-            if(userlogin.Email == userRequest.Email && userlogin.Password == userRequest.Password) {
-                HttpContext.Session.SetInt32("UserId", userRequest.Id);
-                return Json(true);
-            } else {
-                return Json(false);
+            var loginResponse = new LoginResponse();
+            if (!string.IsNullOrEmpty(data?.UserName) && !string.IsNullOrEmpty(data?.Password))
+            {
+                loginResponse.User = _userRepository.GetUser(data.Email);
+
+                if (data.Email != null && data?.Email == loginResponse.User.Email)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    loginResponse.ErrorMessage = "Username and or password is incorrect";
+                    loginResponse.Success = false;
+                    return Json(loginResponse);
+                }
+            }
+            else
+            {
+                loginResponse.ErrorMessage = "Username and or password is required";
+                return Json(loginResponse);
             }
         }
 
@@ -38,7 +51,7 @@ namespace CalvinProject.Controllers
         public IActionResult Register()
         {
             var user = new User();
-            return View();
+            return View(user);
         }
 
         [HttpPost]

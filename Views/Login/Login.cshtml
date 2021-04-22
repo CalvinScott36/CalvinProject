@@ -11,66 +11,76 @@
         width: 550px;
         height: 350px
     }
+
     .loginButtons {
         bottom: 4px;
         position: absolute;
     }
+
     .loginHeader {
         color: white !important;
         background-color: navy !important;
     }
 </style>
 <body>
-    <div class="card loginCard" style="">
-        <div class="card-header loginHeader">
-            <div style="text-align:center;">
-                <h3>Login</h3>
-            </div>
-        </div>
-        <div class="card-body" >
-            <div class="">
-                <form action="#">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="input-group mb-4">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text px-4 border-md border-right-0">
-                                        <i class="fa fa-user text-muted"></i>
-                                    </span>
-                                </div>
-                                <input id="firstName" type="text" name="firstname" placeholder="First Name" class="form-control bg-white border-left-0 border-md">
-                            </div>
-
-                            <div class="input-group  mb-4">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text px-4 border-md border-right-0">
-                                        <i class="fa fa-lock text-muted"></i>
-                                    </span>
-                                </div>
-                                <input id="password" type="password" name="password" placeholder="Password" class="form-control bg-white border-left-0 border-md">
-                            </div>
-                        </div>
-                        <div class="col-sm-12 loginButtons">
-                            <div class="col-sm-6 float-left">
-                                <button type="button" class="btn btn-primary ">Login</button>
-                            </div>
-                            <div class="col-sm-6 float-right">
-                                <button type="button" class="btn btn-primary float-right ">Register</button>
-                            </div>
-                        </div>
+    <div id="login">
+        <div class="container">
+            @await Html.PartialAsync("~/Views/Shared/ToastsView.cshtml")
+            <div class="card loginCard" style="">
+                <div class="card-header loginHeader">
+                    <div style="text-align:center;">
+                        <h3>Login</h3>
                     </div>
-                </form>
+                </div>
+
+                <div class="card-body">
+                    <div class="">
+                        <form action="#">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="input-group mb-4">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text px-4 border-md border-right-0">
+                                                <i class="fa fa-user text-muted"></i>
+                                            </span>
+                                        </div>
+                                        <input id="inputUserName" type="text" v-model="UserName" name="firstname" placeholder="First Name" class="form-control bg-white border-left-0 border-md">
+                                    </div>
+
+                                    <div class="input-group  mb-4">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text px-4 border-md border-right-0">
+                                                <i class="fa fa-lock text-muted"></i>
+                                            </span>
+                                        </div>
+                                        <input id="inputPassword" type="password" v-model="Password" name="password" placeholder="Password" class="form-control bg-white border-left-0 border-md">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 loginButtons">
+                                    <div class="col-sm-6 float-left">
+                                        <button type="button" class="btn btn-primary" v-on:click="login()">Login</button>
+                                    </div>
+                                    <div class="col-sm-6 float-right">
+                                        @Html.ActionLink("Register","Register","Login", null, new { @class = "btn btn-primary float-right" })
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </body>
 
 <script type="text/javascript">
-    function Login() {
+    var loginUrl = '@Url.Action("LoggedIn","Login")';
+    var registerUrl = '@Url.Action("Register", "Login")'
+
+    function LoginData() {
         var user = {
             Name: $("#inputName").val(),
             Password: $("#inputPassword").val(),
-            Email: $("#inputEmail").val()
         };
         if (user.Email === '') {
             $('#dangerTextBody').text('Please fill in your email')
@@ -101,6 +111,8 @@
     }
    }
     $(document).ready(function () {
-
+        $('#dangerTextBody').text('Please fill in your password')
+        $('#dangerToast').toast('show');
     });
 </script>
+<script type="text/javascript" src="~/js/Login/LoginManager.js" asp-append-version="true"></script>

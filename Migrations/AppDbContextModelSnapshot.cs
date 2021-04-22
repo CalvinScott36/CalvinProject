@@ -135,6 +135,10 @@ namespace CalvinProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UserRole")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

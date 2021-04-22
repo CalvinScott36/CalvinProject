@@ -14,5 +14,11 @@ namespace CalvinProject.Models
         public bool Active { get; set; } = true;
         [Required]
         public string UserRole { get; set; }
+        [Required]
+        public string UserName { get; set; }
+        [Required]
+        public string PhoneNumber { get; set; }
+        [Required]
+        public string JobDescription { get; set; }
     }
 }
