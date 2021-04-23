@@ -5,117 +5,138 @@
 
 <body>
     <div id="register">
-        <div class="card">
-            <div class="card-header">
-                <div style="text-align:center;">
-                    <h3>Register</h3>
+        <div class="container-fluid">
+            @await Html.PartialAsync("~/Views/Shared/ToastsView.cshtml")
+            <div class="card">
+                <div class="card-header">
+                    <div style="text-align:center;">
+                        <h3>Register</h3>
+                    </div>
                 </div>
-            </div>
-            <div class="card-body">
-                <!-- Registeration Form -->
-                <div class="">
-                    <form action="#">
-                        <div class="row">
-                            <!-- First Name -->
-                            <div class="input-group col-md-6 mb-4">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-white px-4 border-md border-right-0">
-                                        <i class="fa fa-user text-muted"></i>
-                                    </span>
+                <div class="card-body">
+                    <!-- Registeration Form -->
+                    <div class="">
+                        <form action="#">
+                            <div class="row">
+                                <!-- First Name -->
+                                <div class="input-group col-md-6 mb-4">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                            <i class="fa fa-user text-muted"></i>
+                                        </span>
+                                    </div>
+                                    <input id="firstName" v-model="Firstname" type="text" name="firstname" placeholder="First Name"
+                                           v-bind:class="{'is-invalid': checkFirstName(), 'form-control':true, 'bg-white': true,  'border-left-0': true, 'border-md': true}">
+                                    <div class="col-md-12" v-if="checkFirstName()">
+                                        <span class="text-danger"> please fill in your FirstName</span>
+                                    </div>
                                 </div>
-                                <input id="firstName" v-model="Firstname" type="text" name="firstname" placeholder="First Name" 
-                                       v-bind:class="{'is-invalid': checkFirstName(), 'form-control':true, 'bg-white': true,  'border-left-0': true, 'border-md': true}">
-                            </div>
 
-                            <!-- Last Name -->
-                            <div class="input-group col-md-6 mb-4">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-white px-4 border-md border-right-0">
-                                        <i class="fa fa-user text-muted"></i>
-                                    </span>
+                                <!-- Last Name -->
+                                <div class="input-group col-md-6 mb-4">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                            <i class="fa fa-user text-muted"></i>
+                                        </span>
+                                    </div>
+                                    <input id="lastName" v-model="Surname" type="text" name="lastname" placeholder="Last Name" v-bind:class="{'is-invalid': checkSurname(), 'form-control':true, 'bg-white': true,  'border-left-0': true, 'border-md': true}">
+                                    <div class="col-md-12" v-if="checkSurname()">
+                                        <span class="text-danger"> please fill in your surname</span>
+                                    </div>
                                 </div>
-                                <input id="lastName" v-model="Surname" type="text" name="lastname" placeholder="Last Name" v-bind:class="{'is-invalid': checkSurname(), 'form-control':true, 'bg-white': true,  'border-left-0': true, 'border-md': true}">
-                                <div class="col-md-12" v-if="checkSurname()">
-                                    <span class="text-danger"> please fill in your surname</span>
+
+                                <!-- Email Address -->
+                                <div class="input-group col-md-12 mb-4">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                            <i class="fa fa-envelope text-muted"></i>
+                                        </span>
+                                    </div>
+                                    <input id="email" v-model="Email" type="email" name="email" placeholder="Email Address" v-bind:class="{'is-invalid': checkEmail(), 'form-control':true, 'bg-white': true,  'border-left-0': true, 'border-md': true}">
+                                    <div class="col-md-12" v-if="checkEmail()">
+                                        <span class="text-danger"> invalid email</span>
+                                    </div>
+                                </div>
+
+                                <!-- Phone Number -->
+                                <div class="input-group col-md-12 mb-4">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                            <i class="fa fa-phone-square text-muted"></i>
+                                        </span>
+                                    </div>
+                                    <select v-model="PhoneCountry">
+                                        <option v-for="item in PhoneCountrySelections" :value="item">{{item}}</option>
+                                    </select>
+                                    <input id="PhoneNumber" v-model="PhoneNumber" type="tel" name="phone" placeholder="Phone Number" v-bind:class="{'is-invalid': checkPhoneNumber(), 'form-control':true, 'bg-white': true,  'border-left-0': true, 'border-md': true}">
+                                    <div class="col-md-12" v-if="checkPhoneNumber()">
+                                        <span class="text-danger"> invalid phone number</span>
+                                    </div>
+                                </div>
+
+
+                                <!-- Job -->
+                                <div class="input-group col-lg-12 mb-4">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                            <i class="fa fa-user-tie text-muted"></i>
+                                        </span>
+                                    </div>
+                                    <select v-model="JobDescription" v-bind:class="{'is-invalid': checkJobDescriptions(), 'form-control':true, 'bg-white': true,  'border-left-0': true, 'border-md': true}">
+                                        <option v-for="item in JobDescriptions" :value="item">{{item}}</option>
+                                    </select>
+                                    <div class="col-md-12" v-if="checkJobDescriptions()">
+                                        <span class="text-danger"> Please select a profession</span>
+                                    </div>
+                                </div>
+
+                                <!-- Password -->
+                                <div class="input-group col-lg-6 mb-4">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                            <i class="fa fa-lock text-muted"></i>
+                                        </span>
+                                    </div>
+                                    <input id="password" type="password" v-model="Password" name="password" placeholder="Password" v-bind:class="{'is-invalid': checkPassword(), 'form-control':true, 'bg-white': true,  'border-left-0': true, 'border-md': true}">
+                                    <div class="col-md-12" v-if="checkPassword()">
+                                        <span class="text-danger"> A valid password is required (more than 5 characters)</span>
+                                    </div>
+                                </div>
+
+                                <!-- Password Confirmation -->
+                                <div class="input-group col-lg-6 mb-4">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                            <i class="fa fa-lock text-muted"></i>
+                                        </span>
+                                    </div>
+                                    <input id="passwordConfirmation" type="password" v-model="ConfirmPassword" name="passwordConfirmation" placeholder="Confirm Password" v-bind:class="{'is-invalid': checkConfirmationPassword(), 'form-control':true, 'bg-white': true,  'border-left-0': true, 'border-md': true}">
+                                    <div class="col-md-12" v-if="checkConfirmationPassword()">
+                                        <span class="text-danger"> passwords dont match</span>
+                                    </div>
+                                </div>
+
+                                <!-- Submit Button -->
+                                <div class="form-group col-lg-12 mx-auto mb-0">
+                                    <a href="#" class="btn btn-primary btn-block py-2">
+                                        <span class="font-weight-bold">Create your account</span>
+                                    </a>
+                                </div>
+
+                                <!-- Divider Text -->
+                                <div class="form-group col-lg-12 mx-auto d-flex align-items-center my-4">
+                                    <div class="border-bottom w-100 ml-5"></div>
+                                    <span class="px-2 small text-muted font-weight-bold text-muted">OR</span>
+                                    <div class="border-bottom w-100 mr-5"></div>
+                                </div>
+
+                                <!-- Already Registered -->
+                                <div class="text-center w-100">
+                                    <p class="text-muted font-weight-bold">Already Registered? @Html.ActionLink("Login", "Login", "Login", null, null)</p>
                                 </div>
                             </div>
-
-                            <!-- Email Address -->
-                            <div class="input-group col-md-12 mb-4">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-white px-4 border-md border-right-0">
-                                        <i class="fa fa-envelope text-muted"></i>
-                                    </span>
-                                </div>
-                                <input id="email" v-model="Email" type="email" name="email" placeholder="Email Address" class="form-control bg-white border-left-0 border-md">
-                            </div>
-
-                            <!-- Phone Number -->
-                            <div class="input-group col-md-12 mb-4">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-white px-4 border-md border-right-0">
-                                        <i class="fa fa-phone-square text-muted"></i>
-                                    </span>
-                                </div>
-                                <select v-model="PhoneCountry">
-                                    <option v-for="item in PhoneCountrySelections" :value="item">{{item}}</option>
-                                </select>
-                                <input id="PhoneNumber" v-model="PhoneNumber" type="tel" name="phone" placeholder="Phone Number" class="form-control bg-white border-md border-left-0 pl-3">
-                            </div>.
-
-
-                            <!-- Job -->
-                            <div class="input-group- col-lg-12 mb-4">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-white px-4 border-md border-right-0">
-                                        <i class="fa fa-black-tie text-muted"></i>
-                                    </span>
-                                </div>
-                                <select v-model="JobDescription">
-                                    <option v-for="item in JobDescriptions" :value="item">{{item}}</option>
-                                </select>
-                            </div>
-
-                            <!-- Password -->
-                            <div class="input-group col-lg-6 mb-4">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-white px-4 border-md border-right-0">
-                                        <i class="fa fa-lock text-muted"></i>
-                                    </span>
-                                </div>
-                                <input id="password" type="password" v-model="Password" name="password" placeholder="Password" class="form-control bg-white border-left-0 border-md">
-                            </div>
-
-                            <!-- Password Confirmation -->
-                            <div class="input-group col-lg-6 mb-4">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-white px-4 border-md border-right-0">
-                                        <i class="fa fa-lock text-muted"></i>
-                                    </span>
-                                </div>
-                                <input id="passwordConfirmation" type="password" v-model="ConfirmPassword" name="passwordConfirmation" placeholder="Confirm Password" class="form-control bg-white border-left-0 border-md">
-                            </div>
-
-                            <!-- Submit Button -->
-                            <div class="form-group col-lg-12 mx-auto mb-0">
-                                <a href="#" class="btn btn-primary btn-block py-2">
-                                    <span class="font-weight-bold">Create your account</span>
-                                </a>
-                            </div>
-
-                            <!-- Divider Text -->
-                            <div class="form-group col-lg-12 mx-auto d-flex align-items-center my-4">
-                                <div class="border-bottom w-100 ml-5"></div>
-                                <span class="px-2 small text-muted font-weight-bold text-muted">OR</span>
-                                <div class="border-bottom w-100 mr-5"></div>
-                            </div>
-
-                            <!-- Already Registered -->
-                            <div class="text-center w-100">
-                                <p class="text-muted font-weight-bold">Already Registered? <a href="#" class="text-primary ml-2">Login</a></p>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -123,6 +144,7 @@
 </body>
 
 <script type="text/javascript">
+    var registerUrl = '@Url.Action("Resgister","Login")';
     $(document).ready(function () {
 
     });

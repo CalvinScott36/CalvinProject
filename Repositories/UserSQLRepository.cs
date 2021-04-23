@@ -11,17 +11,24 @@ namespace CalvinProject.Models
         {
             this.context = context;
         }
-        public User AddNewUser(User newUser)
+
+        
+        public bool AddNewUser(User newUser)
         {
+            var success = false;
             using (context)
             {
                 var user = context.Users.FirstOrDefault(usr => usr.Name == newUser.Name || usr.Email == newUser.Email);
                 if(user == null){
                     context.Users.Add(newUser);
                     context.SaveChanges();
+                    success = true;
+                } else
+                {
+                    success = false;
                 }
             }
-            return newUser;
+            return success;
         }
 
         public List<User> GetAllUsers()

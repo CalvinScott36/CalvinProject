@@ -5,7 +5,7 @@ namespace CalvinProject.Interfaces
 {
     public interface IUserInterface
     {
-        User AddNewUser(User newUser);
+        bool AddNewUser(User newUser);
         List<User> GetAllUsers();
         User GetUser(string Email);
         User UpdateUser(User updatedUser);
