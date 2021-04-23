@@ -17,7 +17,7 @@
                     <form action="#">
                         <div class="row">
                             <!-- First Name -->
-                            <div class="input-group col-lg-6 mb-4">
+                            <div class="input-group col-md-6 mb-4">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text bg-white px-4 border-md border-right-0">
                                         <i class="fa fa-user text-muted"></i>
@@ -28,17 +28,20 @@
                             </div>
 
                             <!-- Last Name -->
-                            <div class="input-group col-lg-6 mb-4">
+                            <div class="input-group col-md-6 mb-4">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text bg-white px-4 border-md border-right-0">
                                         <i class="fa fa-user text-muted"></i>
                                     </span>
                                 </div>
-                                <input id="lastName" v-model="Surname" type="text" name="lastname" placeholder="Last Name" class="form-control bg-white border-left-0 border-md">
+                                <input id="lastName" v-model="Surname" type="text" name="lastname" placeholder="Last Name" v-bind:class="{'is-invalid': checkSurname(), 'form-control':true, 'bg-white': true,  'border-left-0': true, 'border-md': true}">
+                                <div class="col-md-12" v-if="checkSurname()">
+                                    <span class="text-danger"> please fill in your surname</span>
+                                </div>
                             </div>
 
                             <!-- Email Address -->
-                            <div class="input-group col-lg-12 mb-4">
+                            <div class="input-group col-md-12 mb-4">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text bg-white px-4 border-md border-right-0">
                                         <i class="fa fa-envelope text-muted"></i>
@@ -48,7 +51,7 @@
                             </div>
 
                             <!-- Phone Number -->
-                            <div class="input-group col-lg-12 mb-4">
+                            <div class="input-group col-md-12 mb-4">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text bg-white px-4 border-md border-right-0">
                                         <i class="fa fa-phone-square text-muted"></i>

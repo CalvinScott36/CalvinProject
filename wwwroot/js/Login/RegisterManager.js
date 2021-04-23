@@ -27,6 +27,13 @@ var vm = new Vue({
             } else {
                 return false;
             }
+        },
+        checkSurname: function () {
+            if (!this.Surname) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 });
