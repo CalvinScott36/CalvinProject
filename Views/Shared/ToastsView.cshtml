@@ -3,7 +3,7 @@
 *@
 @{
 }
-    @*<div id="dangerToast" role="alert" aria-live="assertive" aria-atomic="true" class="toast float-right alert alert-danger">
+@*<div id="dangerToast" role="alert" aria-live="assertive" aria-atomic="true" class="toast float-right alert alert-danger">
         <div id="dangerToastHead" class="toast-header alert alert-danger">
             <p id="dangerTextHead">Error<p>
         </div>
@@ -12,24 +12,36 @@
         </div>
     </div>*@
 
-    <div id="dangerToast" class="toast float-right alert-dark" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">
-        <div class="toast-header bg-primary text-white">
-            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> <strong class="mr-auto"> Error</strong>
-            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="toast-body">
-            <p>{{errorMessage}}</p>
-        </div>
+<div id="dangerToast" class="toast float-right alert-dark" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">
+    <div class="toast-header bg-primary text-white">
+        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> <strong class="mr-auto"> Error</strong>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
+    <div class="toast-body">
+        <template v-if="errorMessage && errorMessage.length > 0">
+            <ul v-for="item in errorMessage">
+                <li class="text-danger">{{item}}</li>
+            </ul>
+        </template>
+    </div>
+</div>
 
 
-    <div id="successToast" role="alert" aria-live="assertive" aria-atomic="true"  class=" toast alert alert-success" data-delay="5000">
-        <div id="successToastHead" class="toast-header alert alert-success">
-            <p id="dangerTextHead">Success<p>
-        </div>
-        <div id="success" class="toast-body alert-success">
-            <p>{{successMessage}}</p>
-        </div>
+
+<div id="successToast" class="toast float-right alert-dark" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">
+    <div class="toast-header bg-primary text-white">
+        <i class="fa fa-check-circle" aria-hidden="true"></i> <strong class="mr-auto"> Success </strong>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
+    <div class="toast-body">
+        <template v-if="successMessage && successMessage.length > 0">
+            <ul v-for="item in successMessage">
+                <li class="text-success">{{item}}</li>
+            </ul>
+        </template>
+    </div>
+</div>

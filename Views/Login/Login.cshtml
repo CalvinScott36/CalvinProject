@@ -111,8 +111,9 @@
     }
    }
     $(document).ready(function () {
-        $('#dangerTextBody').text('Please fill in your password')
-        $('#dangerToast').toast('show');
+        $("#successToast").on('hidden.bs.toast', function () {
+            alert("Toast component has been completely closed.");
+        })
     });
 </script>
 <script type="text/javascript" src="~/js/Login/LoginManager.js" asp-append-version="true"></script>

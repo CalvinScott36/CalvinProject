@@ -1,13 +1,14 @@
 ﻿using CalvinProject.Models;
+using CalvinProject.Models.Response;
 using System.Collections.Generic;
 
 namespace CalvinProject.Interfaces
 {
     public interface IUserInterface
     {
-        bool AddNewUser(User newUser);
+        bool AddNewUser(RegisterUserResponse newUser);
         List<User> GetAllUsers();
-        User GetUser(string Email);
+        User GetUser(LoginResponse loginRes);
         User UpdateUser(User updatedUser);
     }
 }

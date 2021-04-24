@@ -1,19 +1,21 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
 using CalvinProject.Models;
 using CalvinProject.Interfaces;
 using CalvinProject.Models.Response;
+using Microsoft.Extensions.Configuration;
 
 namespace CalvinProject.Controllers
 {
     public class LoginController : Controller
     {
         private IUserInterface _userRepository;
-        public LoginController(IUserInterface userRepository)
+        private IConfiguration config;
+        public LoginController(IConfiguration iConfig, IUserInterface userRepository)
         {
             _userRepository = userRepository;
+            config = iConfig;
         }
 
         public IActionResult Login()
@@ -27,7 +29,11 @@ namespace CalvinProject.Controllers
             var loginResponse = new LoginResponse();
             if (!string.IsNullOrEmpty(data?.UserName) && !string.IsNullOrEmpty(data?.Password))
             {
-                loginResponse.User = _userRepository.GetUser(data.Email);
+                loginResponse = new LoginResponse
+                {
+                    User = new User { UserName = data.UserName, Password = data.Password }
+                };
+                loginResponse.User = _userRepository.GetUser(loginResponse);
 
                 if (data.Email != null && data?.Email == loginResponse.User.Email)
                 {
@@ -55,11 +61,13 @@ namespace CalvinProject.Controllers
         }
 
         [HttpPost]
-        public IActionResult RegisterNewUser(string data)
+        public IActionResult RegisterNewUser([FromBody] User data)
         {
-            var newUser = JsonConvert.DeserializeObject<User>(data);
+            RegisterUserResponse newUser = new RegisterUserResponse { 
+                NewUser = data
+            };
             _userRepository.AddNewUser(newUser);
-            return Json("new user registered");
+            return Json(newUser);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

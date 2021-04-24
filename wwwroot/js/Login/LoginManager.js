@@ -2,9 +2,9 @@
     UserName: '',
     Password: '',
     successMessage: '',
-    errorMessage: '',
+    errorMessage: [],
     showError: false,
-    showSuccess:true
+    showSuccess: false
 }
 
 var vm = new Vue({
@@ -17,14 +17,16 @@ var vm = new Vue({
         successLogin: function (data) {
             debugger;
             if (data.success != true) {
-                this.errorMessage = data.errorMessage;
-                showError = true;
+                this.errorMessage = [];
+                this.errorMessage.push(data.errorMessage);
+                this.showError = true;
                 $('#dangerToast').toast('show');
             }
         },
         falureLogin: function (data) {
-            this.errorMessage = "An Error has occured";
-            showError = true;
+            this.errorMessage = [];
+            this.errorMessage.push("An Error has occured");
+            this.showError = true;
             $('#dangerToast').toast('show');
         },
         register: function () {

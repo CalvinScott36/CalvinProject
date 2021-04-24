@@ -1,55 +1,78 @@
+using CalvinProject.Helpers;
 using CalvinProject.Interfaces;
+using CalvinProject.Models.Response;
+using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 namespace CalvinProject.Models
 {
     public class UserSQLRepository : IUserInterface
     {
-        public AppDbContext context;
-
-        public UserSQLRepository(AppDbContext context)
+        private AppDbContext context;
+        private IConfiguration configuration;
+        private PasswordManager PasswordManager = new PasswordManager(); 
+        public UserSQLRepository(IConfiguration configuration, AppDbContext context)
         {
             this.context = context;
+            this.configuration = configuration;
         }
 
         
-        public bool AddNewUser(User newUser)
+        public bool AddNewUser (RegisterUserResponse newUser)
         {
-            var success = false;
+            newUser.NewUser.Password = PasswordManager.HashPassword(configuration, newUser.NewUser.Password);
             using (context)
             {
-                var user = context.Users.FirstOrDefault(usr => usr.Name == newUser.Name || usr.Email == newUser.Email);
-                if(user == null){
-                    context.Users.Add(newUser);
-                    context.SaveChanges();
-                    success = true;
-                } else
+                try
                 {
-                    success = false;
+                    var user = context.Users.FirstOrDefault(usr => usr.UserName == newUser.NewUser.UserName || usr.Email == newUser.NewUser.Email);
+                    if (user == null)
+                    {
+                        context.Users.Add(newUser.NewUser);
+                        context.SaveChanges();
+                        newUser.Success = true;
+                    }
+                    else
+                    {
+                        newUser.Success = false;
+                        newUser.ErrorMesssage = $"User {newUser.NewUser.FirstName} already exists";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    newUser.Success = false;
+                    newUser.ErrorMesssage = $"An Error has occured { ex.Message }";
                 }
             }
-            return success;
+            return newUser.Success;
         }
 
         public List<User> GetAllUsers()
         {
-            var users = context.Users.ToList();
-            return users;
+            return context.Users.ToList();
         }
 
-        public User GetUser(string Email)
+        public User GetUser(LoginResponse loginRes)
         {
+            var passwordToCheck = PasswordManager.HashPassword(configuration, loginRes.User.Password);
             var user = new User();
             using (context) {
-              user = context.Users.FirstOrDefault(usr => usr.Email == Email || user.UserName == Email);
+              user = context.Users.FirstOrDefault(
+                  usr => (usr.Email == loginRes.User.UserName 
+                  || user.UserName == loginRes.User.UserName)
+                  && passwordToCheck == user.Password);
             }
             return user;
         }
 
+
         public User UpdateUser(User updatedUser )
         {
             var user = context.Users.FirstOrDefault(usr => usr.Id == updatedUser.Id);
-            user.Name = updatedUser.Name;
+            user.FirstName = updatedUser.FirstName;
+            user.Surname = updatedUser.Surname;
+            user.UserName = updatedUser.UserName;
             user.Password = updatedUser.Password;
             user.Email = updatedUser.Email;
             context.SaveChanges();

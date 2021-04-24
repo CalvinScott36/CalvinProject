@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CalvinProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210419131259_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20210424091740_InititialCreate")]
+    partial class InititialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -129,11 +129,23 @@ namespace CalvinProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("JobDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Surname")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

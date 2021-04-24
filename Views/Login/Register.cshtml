@@ -2,13 +2,26 @@
 @{
     ViewData["Title"] = "Registration Page";
 }
+<style>
+    .registerCard {
+        margin: 0 auto; /* Added */
+        float: none; /* Added */
+        margin-bottom: 10px; /* Added */
+        top: 60px;
+    }
 
+
+    .registerHeader {
+        color: white !important;
+        background-color: navy !important;
+    }
+</style>
 <body>
     <div id="register">
         <div class="container-fluid">
             @await Html.PartialAsync("~/Views/Shared/ToastsView.cshtml")
-            <div class="card">
-                <div class="card-header">
+            <div class="card registerCard">
+                <div class="card-header registerHeader">
                     <div style="text-align:center;">
                         <h3>Register</h3>
                     </div>
@@ -19,7 +32,7 @@
                         <form action="#">
                             <div class="row">
                                 <!-- First Name -->
-                                <div class="input-group col-md-6 mb-4">
+                                <div class="input-group col-md-12 mb-4">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text bg-white px-4 border-md border-right-0">
                                             <i class="fa fa-user text-muted"></i>
@@ -33,7 +46,7 @@
                                 </div>
 
                                 <!-- Last Name -->
-                                <div class="input-group col-md-6 mb-4">
+                                <div class="input-group col-md-12 mb-4">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text bg-white px-4 border-md border-right-0">
                                             <i class="fa fa-user text-muted"></i>
@@ -42,6 +55,18 @@
                                     <input id="lastName" v-model="Surname" type="text" name="lastname" placeholder="Last Name" v-bind:class="{'is-invalid': checkSurname(), 'form-control':true, 'bg-white': true,  'border-left-0': true, 'border-md': true}">
                                     <div class="col-md-12" v-if="checkSurname()">
                                         <span class="text-danger"> please fill in your surname</span>
+                                    </div>
+                                </div>
+
+                                <div class="input-group col-md-12 mb-4">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                            <i class="fa fa-user text-muted"></i>
+                                        </span>
+                                    </div>
+                                    <input id="userName" v-model="UserName" type="text" name="lastname" placeholder="User Name" v-bind:class="{'is-invalid': checkUserName(), 'form-control':true, 'bg-white': true,  'border-left-0': true, 'border-md': true}">
+                                    <div class="col-md-12" v-if="checkUserName()">
+                                        <span class="text-danger"> please fill in your user name</span>
                                     </div>
                                 </div>
 
@@ -91,7 +116,7 @@
                                 </div>
 
                                 <!-- Password -->
-                                <div class="input-group col-lg-6 mb-4">
+                                <div class="input-group col-lg-12 mb-4">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text bg-white px-4 border-md border-right-0">
                                             <i class="fa fa-lock text-muted"></i>
@@ -104,7 +129,7 @@
                                 </div>
 
                                 <!-- Password Confirmation -->
-                                <div class="input-group col-lg-6 mb-4">
+                                <div class="input-group col-lg-12 mb-4">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text bg-white px-4 border-md border-right-0">
                                             <i class="fa fa-lock text-muted"></i>
@@ -117,10 +142,8 @@
                                 </div>
 
                                 <!-- Submit Button -->
-                                <div class="form-group col-lg-12 mx-auto mb-0">
-                                    <a href="#" class="btn btn-primary btn-block py-2">
-                                        <span class="font-weight-bold">Create your account</span>
-                                    </a>
+                                <div class="form-group col-lg-12 mx-auto mb-4">
+                                    <button class="btn btn-primary col-sm-12" type="button" v-on:click="registerUser()">Create Account</button>
                                 </div>
 
                                 <!-- Divider Text -->
@@ -144,9 +167,13 @@
 </body>
 
 <script type="text/javascript">
-    var registerUrl = '@Url.Action("Resgister","Login")';
+    var registerUrl = '@Url.Action("RegisterNewUser", "Login")';
     $(document).ready(function () {
-
+        $('#dangerToast').toast('hide');
+        $('#successToast').toast('hide');
+        $("#successToast").on('hidden.bs.toast', function () {
+            window.location = '@Url.Action("Login", "Login")';
+        })
     });
 </script>
 <script type="text/javascript" src="~/js/Login/RegisterManager.js" asp-append-version="true"></script>
