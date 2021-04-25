@@ -6,6 +6,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using CalvinProject.Models;
 using CalvinProject.Interfaces;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.AspNetCore.Http;
 
 namespace CalvinProject
 {
@@ -21,8 +23,10 @@ namespace CalvinProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSession();
             services.AddControllersWithViews();
             services.AddDbContextPool<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ProjectDBConnection")));
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IUserInterface, UserSQLRepository>();
             services.AddTransient<IProductInterface, ProductSQLRepository>();
             services.AddTransient<ICartItemsInterface, CartItemSQLRepository>();
@@ -43,7 +47,7 @@ namespace CalvinProject
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthorization();

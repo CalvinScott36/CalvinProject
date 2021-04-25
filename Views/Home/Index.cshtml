@@ -2,7 +2,38 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div id="Product">
+    <div class="container-fluid bg-white">
+        <div class="card-deck">
+            <template v-if="products && products.length > 0">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="{{Image}}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">{{Name}}</h5>
+                        <p class="card-text">{{Description}}</p>
+                        <p class="card-text">{{Price}}</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </template>
+            <template v-else>
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">No Products</h5>
+                        <p class="card-text">Please Add Some Products</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+    </div>
 </div>
+<script type="text/javascript">
+    var getProductsUrl = '@Url.Action("GetProducts","Home")';
+    $(document).ready(function () {
+
+    });
+</script>
+<script type="text/javascript" src="~/js/Login/ProductManager.js" asp-append-version="true"></script>

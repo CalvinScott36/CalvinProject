@@ -1,20 +1,24 @@
-﻿var userModel = {
-    UserName: '',
-    Password: '',
-    successMessage: '',
-    errorMessage: [],
-    showError: false,
-    showSuccess: false
+﻿var ProductDataModel = {
+    productModel = {
+        Name: "",
+        Price: "",
+        Description: "",
+        Image: "",
+    },
+    products:[]
 }
-
 var vm = new Vue({
-    el: '#login',
-    data: userModel,
+    el: '#Products',
+    data: ProductDataModel,
     methods: {
         login: function () {
             AxiosPost(loginUrl, { UserName: this.$data.UserName, Password: this.$data.Password }, this.successLogin, this.falureLogin);
         },
-        successLogin: function (data) {
+        async getProducts() {
+            debugger;
+            await AxiosGet(getProductsUrl, null, this.successLogin, this.falureProduct);
+        },
+        successProduct: function (data) {
             debugger;
             if (data.success != true) {
                 this.errorMessage = [];
@@ -25,14 +29,15 @@ var vm = new Vue({
                 window.location = data.urlLocation;
             }
         },
-        falureLogin: function (data) {
+        falureProduct: function (data) {
             this.errorMessage = [];
             this.errorMessage.push("An Error has occured");
             this.showError = true;
             $('#dangerToast').toast('show');
-        },
-        register: function () {
-            AxiosGet(registerUrl, null, null, null);
         }
+
+    },
+    created() {
+        this.getProducts();
     }
 });

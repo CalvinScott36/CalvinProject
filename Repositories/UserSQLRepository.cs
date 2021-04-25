@@ -11,15 +11,15 @@ namespace CalvinProject.Models
     {
         private AppDbContext context;
         private IConfiguration configuration;
-        private PasswordManager PasswordManager = new PasswordManager(); 
+        private PasswordManager PasswordManager = new PasswordManager();
         public UserSQLRepository(IConfiguration configuration, AppDbContext context)
         {
             this.context = context;
             this.configuration = configuration;
         }
 
-        
-        public bool AddNewUser (RegisterUserResponse newUser)
+
+        public bool AddNewUser(RegisterUserResponse newUser)
         {
             newUser.NewUser.Password = PasswordManager.HashPassword(configuration, newUser.NewUser.Password);
             using (context)
@@ -57,17 +57,18 @@ namespace CalvinProject.Models
         {
             var passwordToCheck = PasswordManager.HashPassword(configuration, loginRes.User.Password);
             var user = new User();
-            using (context) {
-              user = context.Users.FirstOrDefault(
-                  usr => (usr.Email == loginRes.User.UserName 
-                  || user.UserName == loginRes.User.UserName)
-                  && passwordToCheck == user.Password);
+            using (context)
+            {
+                user = context.Users.FirstOrDefault(
+                    usr => (usr.Email == loginRes.User.UserName
+                  || usr.UserName == loginRes.User.UserName)
+                  && usr.Password == passwordToCheck);
+                return user;
             }
-            return user;
         }
 
 
-        public User UpdateUser(User updatedUser )
+        public User UpdateUser(User updatedUser)
         {
             var user = context.Users.FirstOrDefault(usr => usr.Id == updatedUser.Id);
             user.FirstName = updatedUser.FirstName;

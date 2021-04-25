@@ -8,10 +8,12 @@ namespace CalvinProject.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private IProductInterface productRepository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IProductInterface prodRepository, ILogger<HomeController> logger)
         {
             _logger = logger;
+            productRepository = prodRepository;
         }
 
         public IActionResult Index()
@@ -22,6 +24,13 @@ namespace CalvinProject.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        [HttpGet]
+        public JsonResult GetAllProducts()
+        {
+            var products = productRepository.GetProducts();
+            return Json(products);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

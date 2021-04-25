@@ -4,22 +4,20 @@ using Microsoft.AspNetCore.Http;
 using CalvinProject.Models;
 using CalvinProject.Interfaces;
 using CalvinProject.Models.Response;
-using Microsoft.Extensions.Configuration;
 
 namespace CalvinProject.Controllers
 {
     public class LoginController : Controller
     {
         private IUserInterface _userRepository;
-        private IConfiguration config;
-        public LoginController(IConfiguration iConfig, IUserInterface userRepository)
+        public LoginController(IUserInterface userRepository)
         {
             _userRepository = userRepository;
-            config = iConfig;
         }
 
         public IActionResult Login()
         {
+            HttpContext.Session.SetString("UserId", null);
             return View();
         }
 
@@ -35,12 +33,16 @@ namespace CalvinProject.Controllers
                 };
                 loginResponse.User = _userRepository.GetUser(loginResponse);
 
-                if (data.Email != null && data?.Email == loginResponse.User.Email)
+                if (loginResponse.User.Email != null && loginResponse.User.Password != null)
                 {
-                    return RedirectToAction("Index", "Home");
+                    HttpContext.Session.SetString("UserId", loginResponse.User.Id.ToString());
+                    loginResponse.Success = true;
+                    loginResponse.UrlLocation = Url.Action("Index", "Home");
+                    return Json(loginResponse);
                 }
                 else
                 {
+                    HttpContext.Session.SetString("UserId", null);
                     loginResponse.ErrorMessage = "Username and or password is incorrect";
                     loginResponse.Success = false;
                     return Json(loginResponse);
@@ -48,6 +50,7 @@ namespace CalvinProject.Controllers
             }
             else
             {
+                HttpContext.Session.SetString("UserId", null);
                 loginResponse.ErrorMessage = "Username and or password is required";
                 return Json(loginResponse);
             }
