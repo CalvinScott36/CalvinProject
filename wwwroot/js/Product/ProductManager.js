@@ -1,10 +1,4 @@
 ﻿var ProductDataModel = {
-    productModel : {
-        Name: "",
-        Price: "",
-        Description: "",
-        Image: "",
-    },
     products:[]
 }
 var vm = new Vue({
@@ -14,9 +8,9 @@ var vm = new Vue({
         login: function () {
             AxiosPost(loginUrl, { UserName: this.$data.UserName, Password: this.$data.Password }, this.successLogin, this.falureLogin);
         },
-        async getProducts() {
+        getProducts() {
             debugger;
-            await AxiosGet(getProductsUrl, null, this.successLogin, this.falureProduct);
+            AxiosGet(getProductsUrl, null, this.successProduct, this.falureProduct);
         },
         successProduct: function (data) {
             debugger;
@@ -26,7 +20,7 @@ var vm = new Vue({
                 this.showError = true;
                 $('#dangerToast').toast('show');
             } else {
-                window.location = data.urlLocation;
+                this.products.push(...data.products);
             }
         },
         falureProduct: function (data) {

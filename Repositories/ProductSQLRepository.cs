@@ -1,5 +1,5 @@
+using CalvinProject.Response;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 namespace CalvinProject.Models
 {
@@ -12,35 +12,68 @@ namespace CalvinProject.Models
             this.context = context;
         }
 
-        public Product AddProduct(Product newProduct)
+        public Product AddProduct(AddProductResponse newProductRes)
         {
             using (context)
             {
-                var product = context.Products.Where(prod => prod.Name == newProduct.Name && prod.Price == newProduct.Price);
-                if (product == null)
+                try
                 {
-                    context.Products.Add(newProduct);
-                    context.SaveChanges();
+                    if (!string.IsNullOrEmpty(newProductRes.NewProduct.Name)
+                        || string.IsNullOrEmpty(newProductRes.NewProduct.Description))
+                    {
+                        var product = context.Products.Where(prod => prod.Name == newProductRes.NewProduct.Name && prod.Price == newProductRes.NewProduct.Price).ToList();
+                        if (!product.Any())
+                        {
+                            context.Products.Add(newProductRes.NewProduct);
+                            newProductRes.Success = context.SaveChanges() != 0;
+                        }
+                        else
+                        {
+                            newProductRes.Success = false;
+                            newProductRes.ErrorMessage = $"The product {newProductRes.NewProduct.Name} already exists.";
+                        }
+                    }
+                    else
+                    {
+                        newProductRes.Success = false;
+                        newProductRes.ErrorMessage = "The product must have the following details: price, name and description.";
+                    }
                 }
+                catch (Exception ex)
+                {
+                    newProductRes.Success = false;
+                    newProductRes.ErrorMessage = $"An error has occured: {ex.Message} {ex.InnerException}";
+                }
+
             }
-            return newProduct;
+            return newProductRes.NewProduct;
         }
 
-        public Product GetProduct(Product product)
+        public GetProductResponse GetProduct(Product product)
         {
-            var productSearch = new Product();
+            var productSearch = new GetProductResponse();
             using (context)
             {
-                productSearch = context.Products.FirstOrDefault(prod => prod.Id == product.Id || prod.Name == product.Name);
+                productSearch.Product = context.Products.FirstOrDefault(prod => prod.Id == product.Id || prod.Name == product.Name);
                 return productSearch;
             }
         }
 
-        public List<Product> GetProducts()
+        public GetProductsResponse GetProducts()
         {
+            var productRes = new GetProductsResponse();
             using (context)
             {
-                return context.Products.ToList();
+                try
+                {
+                    productRes.Products = context.Products.ToList();
+                    productRes.Success = true;
+                } catch(Exception ex)
+                {
+                    productRes.Success =false;
+                    productRes.ErrorMessage = $"An error has occured {ex.Message} {ex.InnerException}";
+                }
+                return productRes;
             }
         }
 

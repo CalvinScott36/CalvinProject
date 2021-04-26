@@ -30,15 +30,17 @@
         <div class="col-sm-12">
             <div class="card-deck">
                 <template v-if="products && products.length > 0">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" v-bind:src="Image" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">{{Name}}</h5>
-                            <p class="card-text">{{Description}}</p>
-                            <p class="card-text">{{Price}}</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <template v-for="item in products">
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top"  width="250" height="250" v-bind:src="item.image" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">{{item.name}}</h5>
+                                <p class="card-text">{{item.description}}</p>
+                                <p class="card-text">{{item.price}}</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
                         </div>
-                    </div>
+                    </template>
                 </template>
                 <template v-if="products && products.length == 0">
                     <div class="card" style="width: 18rem;">
@@ -69,7 +71,8 @@
 <script type="text/javascript">
     var getProductsUrl = '@Url.Action("GetAllProducts", "Product")';
     $(document).ready(function () {
-
+        $('#Mainmenu').find('.active').removeClass('active');
+        $('#Mainmenu li').find('a[href="' + location.pathname + '"]').closest('li').addClass('active');
     });
 </script>
-<script type="text/javascript" src="~/js/Login/ProductManager.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/js/Product/ProductManager.js" asp-append-version="true"></script>

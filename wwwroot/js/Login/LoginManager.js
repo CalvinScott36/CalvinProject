@@ -1,7 +1,7 @@
 ﻿var userModel = {
     UserName: '',
     Password: '',
-    successMessage: '',
+    successMessage: [],
     errorMessage: [],
     showError: false,
     showSuccess: false

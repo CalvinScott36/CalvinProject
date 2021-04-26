@@ -1,8 +1,10 @@
-﻿namespace CalvinProject.Models.Response
+﻿using CalvinProject.Models;
+
+namespace CalvinProject.Response
 {
-    public class LoginResponse
+    public class AddProductResponse
     {
-        public User User { get; set; }
+        public Product NewProduct { get; set; }
         public string ErrorMessage { get; set; }
         public bool Success { get; set; }
         public string UrlLocation { get; set; } = "";

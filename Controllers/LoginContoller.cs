@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using CalvinProject.Models;
 using CalvinProject.Interfaces;
-using CalvinProject.Models.Response;
+using CalvinProject.Response;
 
 namespace CalvinProject.Controllers
 {

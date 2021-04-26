@@ -1,6 +1,6 @@
 using CalvinProject.Helpers;
 using CalvinProject.Interfaces;
-using CalvinProject.Models.Response;
+using CalvinProject.Response;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;

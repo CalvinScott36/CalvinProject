@@ -1,5 +1,5 @@
 ﻿using CalvinProject.Models;
-using CalvinProject.Models.Response;
+using CalvinProject.Response;
 using System.Collections.Generic;
 
 namespace CalvinProject.Interfaces

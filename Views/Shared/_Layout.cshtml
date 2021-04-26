@@ -30,13 +30,13 @@
                         <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-home"> Home </i> </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-shopping-cart"> Orders</i> </a>
+                        <a class="nav-link text-light" asp-area="" asp-controller="Orders" asp-action="Index"><i class="fa fa-shopping-cart"> Orders</i> </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-light" asp-area="" asp-controller="Product" asp-action="Index"><i class="fa fa-boxes"> Products</i> </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-user-tie"> Customers</i></a>
+                        <a class="nav-link text-light" asp-area="" asp-controller="Customers" asp-action="Index"><i class="fa fa-user-tie"> Customers</i></a>
                     </li>
                 </ul>
 
@@ -81,12 +81,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {
-            $('#sidebar').toggleClass('active');
-        });
-        $('#Mainmenu li a').click(function () {
-            debugger;
-            $('#Mainmenu ul li').removeClass('active');
-            $(this).parent().addClass('active');
+            $('.sidebar').toggleClass('active');
         });
     });
 </script>

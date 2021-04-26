@@ -61,6 +61,12 @@
         </div>
     </div>
 </div>
-
+<script type="text/javascript">
+    var getProductsUrl = '@Url.Action("GetAllProducts", "Product")';
+    $(document).ready(function () {
+        $('#Mainmenu').find('.active').removeClass('active');
+        $('#Mainmenu li').find('a[href="' + location.pathname + '"]').closest('li').addClass('active');
+    });
+</script>
 
 

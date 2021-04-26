@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using CalvinProject.Response;
 
 namespace CalvinProject.Models
 {
     public interface IProductInterface
     {
-        Product AddProduct(Product newProduct);
-        Product GetProduct(Product product);
-        List<Product> GetProducts();
+        Product AddProduct(AddProductResponse newProductRes);
+        GetProductResponse GetProduct(Product product);
+        GetProductsResponse GetProducts();
         Product UpdateProduct(Product product);
     }
 }

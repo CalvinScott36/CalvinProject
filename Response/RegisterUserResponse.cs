@@ -1,4 +1,6 @@
-﻿namespace CalvinProject.Models.Response
+﻿using CalvinProject.Models;
+
+namespace CalvinProject.Response
 {
     public class RegisterUserResponse
     {

@@ -1,4 +1,5 @@
 ﻿using CalvinProject.Models;
+using CalvinProject.Response;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -26,6 +27,25 @@ namespace CalvinProject.Controllers
             var products = productRepository.GetProducts();
             return Json(products);
         }
+
+        [HttpGet]
+        public IActionResult AddProduct()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddProduct([FromBody] Product data)
+        {
+            var productResponse = new AddProductResponse
+            {
+                NewProduct = data
+            };
+            productRepository.AddProduct(productResponse);
+            return Json(productResponse);
+        }
+
+
 
     }
 }
