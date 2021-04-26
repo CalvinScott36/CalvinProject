@@ -1,5 +1,5 @@
 ﻿var ProductDataModel = {
-    productModel = {
+    productModel : {
         Name: "",
         Price: "",
         Description: "",

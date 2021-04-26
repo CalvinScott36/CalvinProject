@@ -17,7 +17,7 @@ namespace CalvinProject.Controllers
 
         public IActionResult Login()
         {
-            HttpContext.Session.SetString("UserId", null);
+            HttpContext.Session.SetString("UserId", string.Empty);
             return View();
         }
 
@@ -42,7 +42,7 @@ namespace CalvinProject.Controllers
                 }
                 else
                 {
-                    HttpContext.Session.SetString("UserId", null);
+                    HttpContext.Session.SetString("UserId", string.Empty);
                     loginResponse.ErrorMessage = "Username and or password is incorrect";
                     loginResponse.Success = false;
                     return Json(loginResponse);
@@ -50,7 +50,7 @@ namespace CalvinProject.Controllers
             }
             else
             {
-                HttpContext.Session.SetString("UserId", null);
+                HttpContext.Session.SetString("UserId", string.Empty);
                 loginResponse.ErrorMessage = "Username and or password is required";
                 return Json(loginResponse);
             }

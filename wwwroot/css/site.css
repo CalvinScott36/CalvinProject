@@ -90,3 +90,12 @@ body {
     padding-top: 20px;
 }
 
+.maxWidth {
+    max-width: 60%;
+    min-height: 87vh;
+}
+
+.bg-navy {
+    background-color: navy !important;
+}
+

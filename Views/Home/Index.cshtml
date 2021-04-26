@@ -1,39 +1,66 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="Product">
-    <div class="container-fluid bg-white">
+<div class="container-fluid bg-white maxWidth">
+    <div class="col-sm-12 text-center">
+        <h3>Products</h3>
+    </div>
+    <div class="col-sm-12">
         <div class="card-deck">
-            <template v-if="products && products.length > 0">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="{{Image}}" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">{{Name}}</h5>
-                        <p class="card-text">{{Description}}</p>
-                        <p class="card-text">{{Price}}</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
+            <div class="card" style="width: 18rem;">
+                <div class="card-header text-center text-white bg-navy">
+                    <i class="fa fa-boxes fa-10x"></i>
                 </div>
-            </template>
-            <template v-else>
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">No Products</h5>
-                        <p class="card-text">Please Add Some Products</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
+                <div class="card-body">
+                    <h5 class="card-title">Products</h5>
+                    <p class="card-text">Go to products page</p>
                 </div>
-            </template>
+                <div class="card-footer">
+                    @Html.ActionLink("Products", "Index", "Product", null, new { @class = "btn btn-primary col-sm-12" })
+                </div>
+            </div>
+            <div class="card" style="width: 18rem;">
+                <div class="card-header text-center text-white bg-navy">
+                    <i class="fa fa-user fa-10x"></i>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Customers</h5>
+                    <p class="card-text">Go to customers page</p>
+                </div>
+                <div class="card-footer">
+                    @Html.ActionLink("Customers", "Index", "Product", null, new { @class = "btn btn-primary col-sm-12" })
+                </div>
+            </div>
+            <div class="card" style="width: 18rem;">
+                <div class="card-header text-center text-white bg-navy">
+                    <i class="fa fa-shopping-cart fa-10x"></i>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Orders</h5>
+                    <p class="card-text">Go to orders page</p>
+                </div>
+                <div class="card-footer">
+                    @Html.ActionLink("Orders", "Index", "Product", null, new { @class = "btn btn-primary col-sm-12" })
+                </div>
+            </div>
+            <div class="card" style="width: 18rem;">
+                <div class="card-header text-center text-white bg-navy">
+                    <i class="fa fa-shopping-cart fa-10x"></i>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Carts</h5>
+                    <p class="card-text">Go to carts page</p>
+                </div>
+                <div class="card-footer">
+                    @Html.ActionLink("Carts", "Index", "Product", null, new { @class = "btn btn-primary col-sm-12" })
+                </div>
+            </div>
         </div>
-
     </div>
 </div>
-<script type="text/javascript">
-    var getProductsUrl = '@Url.Action("GetProducts","Home")';
-    $(document).ready(function () {
 
-    });
-</script>
-<script type="text/javascript" src="~/js/Login/ProductManager.js" asp-append-version="true"></script>
+
+
