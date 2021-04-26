@@ -26,13 +26,6 @@ namespace CalvinProject.Controllers
             return View();
         }
 
-        [HttpGet]
-        public JsonResult GetAllProducts()
-        {
-            var products = productRepository.GetProducts();
-            return Json(products);
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -19,5 +19,13 @@ namespace CalvinProject.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public JsonResult GetAllProducts()
+        {
+            var products = productRepository.GetProducts();
+            return Json(products);
+        }
+
     }
 }
