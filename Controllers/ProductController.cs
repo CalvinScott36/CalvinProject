@@ -35,6 +35,13 @@ namespace CalvinProject.Controllers
         }
 
         [HttpPost]
+        public IActionResult EditProduct([FromBody] Product data)
+        {
+            var productResponse = productRepository.GetProduct(data);
+            return Json(productResponse);
+        }
+
+        [HttpPost]
         public IActionResult AddProduct([FromBody] Product data)
         {
             var productResponse = new AddProductResponse

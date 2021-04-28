@@ -8,6 +8,9 @@ var vm = new Vue({
         login: function () {
             AxiosPost(loginUrl, { UserName: this.$data.UserName, Password: this.$data.Password }, this.successLogin, this.falureLogin);
         },
+        editProduct: function (product) {
+            AxiosGet(editProductsUrl, product, this.successProduct, this.falureProduct);
+        },
         getProducts() {
             debugger;
             AxiosGet(getProductsUrl, null, this.successProduct, this.falureProduct);

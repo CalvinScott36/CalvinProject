@@ -7,5 +7,7 @@ namespace CalvinProject.Response
         public Product Product { get; set; }
         public string ErrorMessage { get; set; }
         public bool Success { get; set; }
+        public string ProductUrl { get; set; }
+
     }
 }
