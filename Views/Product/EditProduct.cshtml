@@ -5,47 +5,65 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>EditProduct</h1>
+<<div id="EditProduct">
+    @await Html.PartialAsync("~/Views/Shared/ToastsView.cshtml")
+    <div class="container-fluid bg-white maxWidth">
+        <h1>EditProduct</h1>
+        <h4>Product</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
+                <form asp-action="EditProduct">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input v-model="productModel.name" v-bind:class="{'is-invalid': checkProductName(), 'form-control':true}" />
+                        <div class="col-md-12" v-if="checkProductName()">
+                            <span class="text-danger"> A valid product name is required</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Price" class="control-label"></label>
+                        <input v-model="productModel.price" v-bind:class="{'is-invalid': checkProductPrice(), 'form-control':true}" />
+                        <div class="col-md-12" v-if="checkProductPrice()">
+                            <span class="text-danger"> A valid product price is required</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <input v-model="productModel.description" v-bind:class="{'is-invalid': checkProductDescription(), 'form-control':true}" />
+                        <div class="col-md-12" v-if="checkProductDescription()">
+                            <span class="text-danger"> A valid product description is required</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Image" class="control-label"></label>
+                        <input id="productImage" type="file" v-bind:class="{'form-control':true}" @@change="getImageDetials($event.target.files)" accept="image/*">
 
-<h4>Product</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="EditProduct">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <img v-bind:src="productModel.image" height="200" alt="Image preview...">
+                    </div>
+
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary" v-on:click="saveNewProduct()">Edit Product</button>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Image" class="control-label"></label>
-                <input asp-for="Image" class="form-control" />
-                <span asp-validation-for="Image" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
+ <script type="text/javascript">
+    var getProductsUrl = '@Url.Action("GetAllProducts", "Product")';
+    var productSaveUrl = '@Url.Action("AddProduct", "Product")';
+    var model = JSON.parse('@Html.Raw(Json.Serialize(@Model))');
+    $(document).ready(function () {
+        $('#Mainmenu').find('.active').removeClass('active');
+        $('#Mainmenu li').find('a[href*="' + location.pathname.split('/')[1] + '"]').closest('li').addClass('active');
+    });
+ </script>
+<script type="text/javascript" src="~/js/Product/EditProduct.js" asp-append-version="true"></script>

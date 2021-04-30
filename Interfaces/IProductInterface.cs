@@ -5,7 +5,7 @@ namespace CalvinProject.Models
     public interface IProductInterface
     {
         Product AddProduct(AddProductResponse newProductRes);
-        GetProductResponse GetProduct(Product product);
+        GetProductResponse GetProduct(int productId);
         GetProductsResponse GetProducts();
         Product UpdateProduct(Product product);
     }

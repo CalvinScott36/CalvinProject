@@ -49,13 +49,24 @@ namespace CalvinProject.Models
             return newProductRes.NewProduct;
         }
 
-        public GetProductResponse GetProduct(Product product)
+        public GetProductResponse GetProduct(int productId)
         {
             var productSearch = new GetProductResponse();
             using (context)
             {
-                productSearch.Product = context.Products.FirstOrDefault(prod => prod.Id == product.Id || prod.Name == product.Name);
-                return productSearch;
+                try
+                {
+                    productSearch.Product = context.Products.FirstOrDefault(prod => prod.Id == productId);
+                    productSearch.Success = true;
+                    return productSearch;
+                }
+                catch (Exception ex)
+                {
+                    productSearch.Success = false;
+                    productSearch.ErrorMessage = $"An error has occurred {ex.Message} {ex.InnerException}";
+                    return productSearch;
+                }
+
             }
         }
 
@@ -68,9 +79,10 @@ namespace CalvinProject.Models
                 {
                     productRes.Products = context.Products.ToList();
                     productRes.Success = true;
-                } catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
-                    productRes.Success =false;
+                    productRes.Success = false;
                     productRes.ErrorMessage = $"An error has occured {ex.Message} {ex.InnerException}";
                 }
                 return productRes;

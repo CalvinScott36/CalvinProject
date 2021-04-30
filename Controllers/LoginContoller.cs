@@ -33,7 +33,7 @@ namespace CalvinProject.Controllers
                 };
                 loginResponse.User = _userRepository.GetUser(loginResponse);
 
-                if (loginResponse.User.Email != null && loginResponse.User.Password != null)
+                if (loginResponse.User != null && ( loginResponse.User.Email != null && loginResponse.User.Password != null))
                 {
                     HttpContext.Session.SetString("UserId", loginResponse.User.Id.ToString());
                     loginResponse.Success = true;

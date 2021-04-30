@@ -3,6 +3,7 @@
 }
 
 <div id="Products">
+    @await Html.PartialAsync("~/Views/Shared/ToastsView.cshtml")
     <div class="container-fluid bg-white maxWidth">
         <div class="col-sm-12">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -43,6 +44,7 @@
                             </div>
                             <div class="card-footer">
                                 <button class="btn btn-primary" v-on:click="editProduct(item)"><i class="fa fa-edit"> Edit Product</i></button>
+                                @Html.ActionLink("linky", "EditProduct", "Product", new { onclick = "editProduct();" })
                                 <button class="btn btn-primary float-right"><i class="fa fa-remove"> Delete Product</i></button>
                             </div>
                         </div>
@@ -76,7 +78,7 @@
 </div>
 <script type="text/javascript">
     var getProductsUrl = '@Url.Action("GetAllProducts", "Product")';
-    var editProductsUrl = '@Url.Action("EditProduct", "Product")';
+    var gotToEditProductsUrl = '@Url.Action("LoadEditScreen", "Product")';
     $(document).ready(function () {
         $('#Mainmenu').find('.active').removeClass('active');
         $('#Mainmenu li').find('a[href="' + location.pathname + '"]').closest('li').addClass('active');
